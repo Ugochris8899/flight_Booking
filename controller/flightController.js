@@ -121,66 +121,66 @@ const getOneFlight = async(req, res) =>{
 
 
 
-// const flightUpdate = async (req, res) => {
-//     try {
-//       const flightId = req.params.id;
-//       const flight = await flightModel.findById(flightId);
+const flightUpdate = async (req, res) => {
+    try {
+      const flightId = req.params.id;
+      const flight = await flightModel.findById(flightId);
   
-//       if (!flight) {
-//         return res.status(404).json({
-//           message: `flight with id: ${flightId} not found`,
-//         });
-//       }
+      if (!flight) {
+        return res.status(404).json({
+          message: `flight with id: ${flightId} not found`,
+        });
+      }
   
-//       const { airlineName, priceStandard,priceFlex,duration  } = req.body;
-//       const data = {
-//         airlineName: airlineName || flight.airlineName,
-//         priceStandard: priceStandard || flight.priceStandard,
-//         priceFlex: priceFlex || flight.priceFlex,
-//         duration: duration || flight.duration
-//       };
+      const { airlineName, priceStandard,priceFlex,duration  } = req.body;
+      const data = {
+        airlineName: airlineName || flight.airlineName,
+        priceStandard: priceStandard || flight.priceStandard,
+        priceFlex: priceFlex || flight.priceFlex,
+        duration: duration || flight.duration
+      };
   
-//       // Handle image update
-//       if (req.files && req.files.airlineLogo) {
-//         const updatedImageUrls = [];
-//         const updatedPublicIds = [];
+      // Handle image update
+      if (req.files && req.files.airlineLogo) {
+        const updatedImageUrls = [];
+        const updatedPublicIds = [];
   
-//         // Delete existing images in Cloudinary
-//         for (const publicId of flight.public_id) {
-//           await cloudinary.uploader.destroy(publicId);
-//         }
+        // Delete existing images in Cloudinary
+        for (const publicId of flight.public_id) {
+          await cloudinary.uploader.destroy(publicId);
+        }
   
-//         // Upload new images and store their URLs and public IDs
-//         for (const image of req.files.airlineLogo) {
-//             const file = await cloudinary.uploader.upload(image.tempFilePath, { folder: 'Trippy' });
-//           updatedImageUrls.push(file.secure_url);
-//           updatedPublicIds.push(file.public_id)
+        // Upload new images and store their URLs and public IDs
+        for (const image of req.files.airlineLogo) {
+            const file = await cloudinary.uploader.upload(image.tempFilePath, { folder: 'Trippy' });
+          updatedImageUrls.push(file.secure_url);
+          updatedPublicIds.push(file.public_id)
 
-//         }
+        }
   
-//         // Replace the image URLs and public IDs with the updated ones
-//         data.images = updatedImageUrls;
-//         data.public_id = updatedPublicIds;
-//       }
+        // Replace the image URLs and public IDs with the updated ones
+        data.images = updatedImageUrls;
+        data.public_id = updatedPublicIds;
+      }
   
-//       const updatedFlight = await flightModel.findByIdAndUpdate(flightId, data, { new: true });
+      const updatedFlight = await flightModel.findByIdAndUpdate(flightId, data, { new: true });
   
-//       if (updatedFlight) {
-//         res.status(200).json({
-//           message: `flight successfully updated`,
-//           data: updatedFlight,
-//         });
-//       } else {
-//         res.status(400).json({
-//           message: 'Can not update flight',
-//         });
-//       }
-//     } catch (error) {
-//       res.status(500).json({
-//         Error: error.message,
-//       });
-//     }
-//   };
+      if (updatedFlight) {
+        res.status(200).json({
+          message: `flight successfully updated`,
+          data: updatedFlight,
+        });
+      } else {
+        res.status(400).json({
+          message: 'Can not update flight',
+        });
+      }
+    } catch (error) {
+      res.status(500).json({
+        Error: error.message,
+      });
+    }
+  };
 
 
 const deleteFlight = async (req, res) => {

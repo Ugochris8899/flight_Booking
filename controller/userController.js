@@ -3,6 +3,8 @@ const jwt = require("jsonwebtoken");
 const bcryptjs = require("bcryptjs");
 const { sendEmail } = require("../middlewares/sendEmail");
 const { genToken, decodeToken } = require("../utilities/jwt");
+const fs = require("fs");
+const { generateDynamicEmail } = require("../utilities/emailTemplate");
 
 const newUser = async (req, res) => {
   try {
@@ -29,14 +31,13 @@ const newUser = async (req, res) => {
         });
         const token = await genToken(user._id, "30m");
         const subject = "New User";
-        const link = `${req.protocol}://${req.get(
-          "host"
-        )}/trippy/verify/${token}`;
-        const message = `welcome onboard kindly use this ${link} to verify your account`;
+        const link = `http://localhost:5173/verify?token=${token}`;
+        // const message = `welcome onboard kindly use this ${link} to verify your account`;
+        const html = await generateDynamicEmail(link);
         const data = {
           email: email,
           subject,
-          message,
+          html,
         };
         sendEmail(data);
         res.status(200).json({
@@ -132,14 +133,14 @@ const signin = async (req, res) => {
     } else if (!user.isVerified) {
       const token = await genToken(user._id, "30m");
       const subject = "verify now";
-      const link = `${req.protocol}://${req.get(
-        "host"
-      )}/trippy/verify/${token}`;
-      const message = ` kindly use this ${link} to verify your account`;
+      const link = `http://localhost:5050/verify?token=${token}`;
+      // const message = ` kindly use this ${link} to verify your account`;
+      const html = await generateDynamicEmail(link);
+
       const data = {
         email: email,
         subject,
-        message,
+        html,
       };
       sendEmail(data);
       res.status(401).json({

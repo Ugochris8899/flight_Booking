@@ -1,49 +1,61 @@
 const mongoose = require("mongoose");
 
-const hotelSchema = new mongoose.Schema({
-    hotelName: 
-    {
-        type:String,
-        required: true
+const hotelSchema = new mongoose.Schema(
+  {
+    hotelName: {
+      type: String,
+      required: [true, "Hotel name is required."],
+      lowercase: true,
     },
-    hotelRatings: 
-    {
-        type:Number,
-        required: true
+    city: {
+      type: String,
+      required: [true, "city is required."],
+      lowercase: true,
     },
-    hotelReviews: 
-    {
-        type:Number,
-        required: true
+    country: {
+      type: String,
+      required: [true, "country is required."],
+      lowercase: true,
     },
-    hotelCheckin: 
-    {
-        type:String,
-        required: true
+    address: {
+      type: String,
+      required: [true, "address is required."],
     },
-    hotelCheckout: 
-    {
-        type:String,
-        required: true
+    description: {
+      type: String,
+      required: [true, "Description is required."],
     },
-    hotelLocation: 
-    {
-        type:String,
-        required: true
+    checkIn: {
+      type: Number,
+      required: [true, "Check in time is required."],
     },
-    price: 
-    {
-        type:Number,
-        required: true
+    checkOut: {
+      type: Number,
+      required: [true, "Check out time is required."],
     },
-    features: [ String],
-    personsPerRoom: 
-    {
-        type:Number,
-        required: true
+    pricePerNight: {
+      type: Number,
+      required: [true, "Price is required."],
     },
-    
-})
+    features: [String],
+    images: [String],
+    maxPerRoom: {
+      type: Number,
+      required: [true, "Max per room is required."],
+    },
+    starRating: {
+      type: Number,
+    },
+    ratings: [
+      {
+        star: Number,
+        comment: String,
+        postedBy: { type: mongoose.Schema.Types.ObjectId, ref: "User" },
+      },
+    ],
+  },
+  { timestamps: true }
+);
 
 const hotelModel = mongoose.model("Hotel", hotelSchema);
 
