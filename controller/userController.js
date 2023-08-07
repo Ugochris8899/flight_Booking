@@ -30,7 +30,7 @@ const newUser = async (req, res) => {
           password: hash,
         });
         const token = await genToken(user._id, "30m");
-        const subject = "New User";
+        const subject = "Verify Email";
         const link = `http://localhost:5173/verify?token=${token}`;
         // const message = `welcome onboard kindly use this ${link} to verify your account`;
         const html = await generateDynamicEmail(link,user.firstName);
