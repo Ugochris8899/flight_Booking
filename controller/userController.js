@@ -33,7 +33,7 @@ const newUser = async (req, res) => {
         const subject = "New User";
         const link = `http://localhost:5173/verify?token=${token}`;
         // const message = `welcome onboard kindly use this ${link} to verify your account`;
-        const html = await generateDynamicEmail(link);
+        const html = await generateDynamicEmail(link,user.firstName);
         const data = {
           email: email,
           subject,
