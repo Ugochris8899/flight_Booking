@@ -1,5 +1,6 @@
 require("./config/dbConfig");
 const express = require("express");
+// const dotenv = require('dotenv').config();
 const userRouter = require("./routers/userRouter");
 const adminRouter = require("./routers/adminRouter");
 const flightRouter = require("./routers/flightRouter");
