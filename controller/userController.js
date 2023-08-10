@@ -31,7 +31,7 @@ const newUser = async (req, res) => {
         });
         const token = await genToken(user._id, "30m");
         const subject = "Verify Email";
-        const link = `http://localhost:5173/verify?token=${token}`;
+        const link = `https://trippy1.onrender.com/trippy/verify/${token}`;
         // const message = `welcome onboard kindly use this ${link} to verify your account`;
         const html = await generateDynamicEmail(link,user.firstName);
         const data = {
