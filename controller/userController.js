@@ -30,6 +30,7 @@ const newUser = async (req, res) => {
           password: hash,
         });
         const token = await genToken(user._id, "30m");
+        console.log(token);
         const subject = "Verify Email";
         const link = `https://trippy1.onrender.com/trippy/verify/${token}`;
         // const message = `welcome onboard kindly use this ${link} to verify your account`;
@@ -174,7 +175,7 @@ const getAll = async (req, res) => {
 const getOne = async (req, res) => {
   try {
     const { userId } = req.params;
-    const user = await User.findById(userId);
+    const user = await User.find(userId);
     res.json({ user });
   } catch (error) {
     res.status(500).json({

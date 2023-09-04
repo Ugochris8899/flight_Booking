@@ -46,7 +46,7 @@ const flightSchema = new mongoose.Schema(
   {
     from: {
       type: String,
-      required: [true, "take of city is required."],
+      required: [true, "take off city is required."],
       lowercase: true,
     },
     to: {
